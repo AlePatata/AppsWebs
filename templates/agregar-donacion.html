@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Donación</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</head>
+<body>
+    <h1>Agregar Donacion</h1>
+    <div>
+        <form action="/agregar-donacion" method="POST" id ="donation_form">
+            <div>
+                <h2>Completa con tu información</h2>
+                <div>
+                    <div style="background-color: #ff9595">
+                        <label for="nombre">Nombre:</label> <br>
+                        <input type="text" name="fname" required><br>
+                    </div>
+                    <div style="background-color: #ff9595">
+                        <label for="email">Email:</label><br>
+                        <input type="text" name="fname" required><br>
+                    </div>
+                    <div style="background-color: #ff9595">
+                        <label for="numero">Número celular:</label><br>
+                        <input type="text" name="fname" ><br>
+                    </div>
+                    <div class="form-regions">
+                        <label for="region-selection">Región:</label>
+                        <select name="region" id="region-select">
+                            <option value="" disabled selected> -- Selecciona una región -- </option>
+                            {% for region in regions %}
+                                <option value="{{ region.id }}" > {{ region.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>    
+                    <div class="form-comunas">
+                        <label for="comuna-selection">Comuna:</lab required><br>
+                        <select name="comuna" id="comuna-select">
+                            <option value="" disabled selected> -- Selecciona una comuna -- </option>
+                            {% for comuna in comunas %}
+                                <option value="{{ comuna.id }}" > {{ comuna.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <h2>Información del Dispositivo</h2>
+                    <div style="background-color: #ff9595">
+                        <label for="dispositivo">Nombre del dispositivo:</label><br>
+                        <input type="text" name="fname" required><br>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Donar" name="donation_form"/>
+      
+        </form>
+
+        
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            function loadComunas(regionId) {
+                if (regionId) {
+                    $.ajax({
+                        url: '/comunas/' + regionId,
+                        method: 'GET',
+                        success: function(data) {
+                            $('#comuna-select').empty();
+                            $('#comuna-select').append('<option value="">Select a Comuna</option>');
+                            $.each(data, function(index, comuna) {
+                                $('#comuna-select').append('<option value="' + comuna.id + '">' + comuna.name + '</option>');
+                            });
+                        },
+                        error: function() {
+                            $('#comuna-select').empty();
+                            $('#comuna-select').append('<option value="">Error loading comunas</option>');
+                        }
+                    });
+                } else {
+                    $('#comuna-select').empty();
+                    $('#comuna-select').append('<option value="">Select a Comuna</option>');
+                }
+            }
+
+            $('#region-select').change(function() {
+                var regionId = $(this).val();
+                loadComunas(regionId);
+            });
+        });
+    </script>
+
+</body>
+
+
+</html>
