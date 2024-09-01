@@ -30,12 +30,6 @@ def agregar_donacion():
     return render_template('agregar-donacion.html',regions=regions, comunas=comunas)
 
 
-@app.route('/comunas/<int:region_id>')
-def comunas(region_id):
-    region = next((region for region in regions if region['id'] == region_id), None)
-    if region:
-        return jsonify(region['comunas'])
-    return jsonify([])
 
 
 @app.route('/ver-dispositivos')
