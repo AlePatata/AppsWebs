@@ -4,74 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Donación</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='agregar-donacion.css') }}">
+    <link rel="stylesheet" href="../static/agregar-donacion.css">
 </head>
 <body>
     <h1>Agregar Donacion</h1>
-    <div class="form">
-        <form class="main-container" action="/agregar-donacion" method="POST" id ="donation_form">
-            <div>
-                <h2>Completa con tu información</h2>
-                <div>
-                    <div class="field" >
-                        <label for="nombre">Nombre:</label> <br>
-                        <input type="text" name="fname" required><br>
-                    </div>
-                    <div class="field">
-                        <label for="email">Email:</label><br>
-                        <input type="text" name="fname" required><br>
-                    </div>
-                    <div class="field">
-                        <label for="numero">Número celular:</label><br>
-                        <input type="text" name="fname" ><br>
-                    </div>
-                    <div class="form-regions">
-                        <label for="region-selection">Región:</label>
-                        <select name="region" id="region-select">
-                            <option value="" disabled selected> -- Selecciona una región -- </option>
-                            {% for region in regions %}
-                                <option value="{{ region.id }}" > {{ region.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>    
-                    <div class="form-comunas">
-                        <label for="comuna-selection">Comuna:</lab required><br>
-                        <select name="comuna" id="comuna-select">
-                            <option value="" disabled selected> -- Selecciona una comuna -- </option>
-                            {% for comuna in comunas %}
-                                <option value="{{ comuna.id }}" > {{ comuna.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <h2>Información del Dispositivo</h2>
-                    <div class="field">
-                        <label for="dispositivo">Nombre del dispositivo:</label><br>
-                        <input type="text" name="fname" required><br>
-                    </div>
-                    <div class="field">
-                        <label for="dispositivo">Descripción:</label><br>
-                        <input type="text" name="descripcion" required><br>
-                    </div>
-                    <div class="form-tipo">
-                        <label for="tipo-selection">Región:</label>
-                        <select name="tipo" id="tipo-select">
-                            <option value="" disabled selected> -- Selecciona una región -- </option>
-                            {% for tipo in tipos %}
-                                <option value="{{ tipo.id }}" > {{ tipo.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div> 
-                </div>
-            </div>
-            <button id="submit-btn" type="button">Enviar</button>
+
+
+    <div class="main-container">
+        <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+        </div>
+        <form name="myForm" method="post" enctype="multipart/form-data">
+            <h2>Completa con tu información</h2>
+        
+            <label for="name">Nombre:</label> 
+            <input class="field" class="field" type="name" name="name" id="name" required><br>
+
+            <label for="email">Email:</label>
+            <input class="field" type="email" name="email" id="email" required><br>
+        
+            <label for="phone">Número celular:</label>
+            <input class="field" type="text" name="phone" id="phone"><br>
+        
+            <label for="region">Región: </label>
+            <select name="select-region" id="select-region" required>
+                <option value=""> Selecciona una región </option>
+            </select><br>
+        
+            <label for="comuna">Comuna:</label>
+            <select name="select-comuna" id="select-comuna" required>
+                <option value=""> Selecciona una comuna </option>
+            </select>
+            
+            <h2>Información del Dispositivo</h2>
+            
+            <label for="dname">Nombre del dispositivo:</label>
+            <input class="field" type="text" name="dname" id="dname" required><br>
+        
+            <label for="description">Descripción:</label>
+            <input class="field" type="text" name="description" id="description" ><br>
+        
+            <label for="device">Tipo de dispositivo: </label>
+            <select name="select-device" id="select-device" required>
+                <option value="" disabled selected> Selecciona un tipo </option>
+            </select><br>
+
+            <label for="years-of-use">Años de uso:</label>
+            <input class="field" type="text" name="years-of-use" id="years-of-use" required><br>
+
+            <label for="state">Estado de Funcionamiento: </label>
+            <select name="select-state" id="select-state" required>
+                <option value="" disabled selected> Selecciona un tipo </option>
+            </select><br>
+
+            <label for="files">Imágenes</label>
+            <input class="field" type="file" name="files" id="files" multiple accept="image/*,.pdf" required><br>
+                
+            <button type="submit">Enviar</button>
       
-        </form>        
+        </form>  
+        
+        
     </div>
 
-    <script src="{{ url_for('static', filename='validation.js') }}"></script>
-    <script src="{{ url_for('static', filename='select.js') }}"></script>
+    <script src="../static/validation.js"></script>
+    <script src="../static/select.js"></script>
 
 </body>
 
