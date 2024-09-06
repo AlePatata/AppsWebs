@@ -28,48 +28,57 @@
             <input class="field" type="text" name="phone" id="phone"><br>
         
             <label for="region">Región: </label>
-            <select name="select-region" id="select-region" required>
+            <select class="select" name="select-region" id="select-region" required>
                 <option value=""> Selecciona una región </option>
             </select><br>
         
             <label for="comuna">Comuna:</label>
-            <select name="select-comuna" id="select-comuna" required>
+            <select class="select" name="select-comuna" id="select-comuna" required>
                 <option value=""> Selecciona una comuna </option>
-            </select>
+            </select><br>
             
             <h2>Información del Dispositivo</h2>
             
-            <label for="dname">Nombre del dispositivo:</label>
-            <input class="field" type="text" name="dname" id="dname" required><br>
-        
-            <label for="description">Descripción:</label>
-            <input class="field" type="text" name="description" id="description" ><br>
-        
-            <label for="device">Tipo de dispositivo: </label>
-            <select name="select-device" id="select-device" required>
-                <option value="" disabled selected> Selecciona un tipo </option>
-            </select><br>
+            <div id="deviceContainer">
+                <div class="device">
+                    <label for="dname">Nombre del dispositivo:</label>
+                    <input class="field" type="text" name="dname[]" required><br>
 
-            <label for="years-of-use">Años de uso:</label>
-            <input class="field" type="text" name="years-of-use" id="years-of-use" required><br>
+                    <label for="description">Descripción:</label>
+                    <input class="field" type="text" name="description[]" ><br>
 
-            <label for="state">Estado de Funcionamiento: </label>
-            <select name="select-state" id="select-state" required>
-                <option value="" disabled selected> Selecciona un tipo </option>
-            </select><br>
+                    <label for="device">Tipo de dispositivo: </label>
+                    <select class="select" id="select-device" name="select-device[]" required>
+                        <option value="" disabled selected> Selecciona un tipo </option>
+                    </select><br>
 
-            <label for="files">Imágenes</label>
-            <input class="field" type="file" name="files" id="files" multiple accept="image/*,.pdf" required><br>
-                
-            <button type="submit">Enviar</button>
+                    <label for="years-of-use">Años de uso:</label>
+                    <input class="field" type="text" name="years-of-use[]" required><br>
+
+                    <label for="state">Estado de Funcionamiento: </label>
+                    <select class="select" id="select-state" name="select-state[]" required>
+                        <option value="" disabled selected> Selecciona un tipo </option>
+                    </select><br>
+
+                    <label for="files">Imágenes</label>
+                    <input class="field" type="file" name="files[]" multiple accept="image/*,.pdf" required><br>
+                    
+                    <hr class="degradao">
+                </div>
+            </div>
+
+            <button class="button" type="button" id="addDeviceButton">Agregar otro dispositivo</button>
+            <button class="button" type="button" id="removeDeviceButton">Eliminar dispositivo</button>
+            <button class="button"type="submit">Enviar</button>
       
         </form>  
         
         
     </div>
-
+    <button class="button" onclick="window.location.href = '/templates/index.html'">Volver al Menú Principal</button>
     <script src="../static/validation.js"></script>
     <script src="../static/select.js"></script>
+    <script src="../static/new-device.js"></script>
 
 </body>
 

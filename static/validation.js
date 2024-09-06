@@ -76,11 +76,6 @@ const validateForm = () => {
     let name = myForm["name"].value;
     let region = myForm["select-region"].value;
     let comuna = myForm["select-comuna"].value;
-    let dname = myForm["dname"].value;
-    let device = myForm["device"].value;
-    let yearsOfUse = myForm["years-of-use"].value;
-    let state = myForm["state"].value;
-    let files = myForm["files"].files;
   
     // variables auxiliares de validación y función.
     let invalidInputs = [];
@@ -106,24 +101,38 @@ const validateForm = () => {
     if (!validateSelect(comuna)) {
       setInvalidInput("Comuna");
     }
-    if (!validateDeviceName(dname)) {
-      setInvalidInput("Nombre del dispositivo");
-    }
-    if (!validateSelect(device)) {
-      setInvalidInput("Tipo de dispositivo");
-    }
-    if (!validateYearsOfUse(yearsOfUse)) {
-      setInvalidInput("Años de uso");
-    }
-    if (!validateSelect(state)) {
-      setInvalidInput("Estado de Funcionamiento");
-    }
-    if (!validateFiles(files)) {
-      setInvalidInput("Fotos");
-    }
-    if (!validateYearsOfUse(yearsOfUse)) {
-      setInvalidInput("Años de uso");
-    }
+    // Validar cada dispositivo de forma individual
+    let devices = document.querySelectorAll('#deviceContainer .device'); 
+
+    if (devices !== null) {
+      devices.forEach((device, index) => {
+        let dname = device.querySelector('input[name="dname[]"]').value;
+        let deviceType = device.querySelector('select[name="select-device[]"]').value;
+        let yearsOfUse = device.querySelector('input[name="years-of-use[]"]').value;
+        let state = device.querySelector('select[name="select-state[]"]').value;
+        let files = device.querySelector('input[name="files[]"]').files;
+
+        // Agregar índice al nombre del dispositivo para diferenciar entre los dispositivos
+        let deviceNumber = `Dispositivo ${index + 1}`;
+
+        // Validaciones para cada dispositivo
+        if (!validateDeviceName(dname)) {
+            setInvalidInput(`${deviceNumber}: Nombre del dispositivo`);
+        }
+        if (!validateSelect(deviceType)) {
+            setInvalidInput(`${deviceNumber}: Tipo de dispositivo`);
+        }
+        if (!validateYearsOfUse(yearsOfUse)) {
+            setInvalidInput(`${deviceNumber}: Años de uso`);
+        }
+        if (!validateSelect(state)) {
+            setInvalidInput(`${deviceNumber}: Estado de Funcionamiento`);
+        }
+        if (!validateFiles(files)) {
+            setInvalidInput(`${deviceNumber}: Fotos`);
+        }
+      });
+    };
     // finalmente mostrar la validación
     let validationBox = document.getElementById("val-box");
     let validationMessageElem = document.getElementById("val-msg");
@@ -161,19 +170,29 @@ const validateForm = () => {
       validationBox.style.borderLeftColor = "#4CAF50";
       */
 
-      // Agregar botones para enviar el formulario o volver
+      
+
       let submitButton = document.createElement("button");
       submitButton.innerText = "Enviar";
+      submitButton.classList.add("button");
       submitButton.style.marginRight = "10px";
       submitButton.addEventListener("click", () => {
-        // myForm.submit();
-        // no tenemos un backend al cual enviarle los datos
+        validationMessageElem.innerText = "Hemos recibido la información de su donación. Muchas gracias<3";
+        validationListElem.textContent = "";
+
+        let homeButton = document.createElement("button");
+        homeButton.innerText = "Volver al inicio";
+        homeButton.classList.add("button");
+        homeButton.addEventListener("click", () => {
+          window.location.href = "/templates/index.html";
+        });
+        validationListElem.appendChild(homeButton);
       });
   
       let backButton = document.createElement("button");
       backButton.innerText = "Volver";
+      backButton.classList.add("button");
       backButton.addEventListener("click", () => {
-        // Mostrar el formulario nuevamente
         myForm.style.display = "block";
         validationBox.hidden = true;
       });
@@ -189,7 +208,8 @@ const validateForm = () => {
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.forms['myForm'];
   form.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent the default form submission
-      validateForm(); // Call the validation function
+    console.log('Form submitted');
+    event.preventDefault(); // Prevent the default form submission
+    validateForm(); // Call the validation function
   });
 });

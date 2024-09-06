@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/informacion-dispositivo.css">
+</head>
+<body>
+    <div class="device">
+        <p id="type"></p>
+        <p id="name"></p>
+        <p id="state"></p>
+        <p id="comuna"></p>
+        <img id="photo" alt="Foto del Dispositivo">
+    </div>
+
+    <button class="button" onclick="window.location.href = '/templates/index.html'">Volver al Menú Principal</button>
+    
+    <script>
+        function populateProfile() {
+            const deviceData = JSON.parse(localStorage.getItem('deviceData'));
+            if (deviceData) {
+                document.getElementById('type').textContent = `Tipo: ${deviceData.type}`;
+                document.getElementById('name').textContent = `Nombre: ${deviceData.name}`;
+                document.getElementById('state').textContent = `Estado: ${deviceData.state}`;
+                document.getElementById('comuna').textContent = `Comuna: ${deviceData.comuna}`;
+                document.getElementById('photo').src = deviceData.photo;
+                document.getElementById('photo').alt = `Foto del Dispositivo: ${deviceData.name}`;
+            }
+        }
+
+        function toggleImageSize() {
+            console.log('Cambiando tamaño de la imagen');
+            const photo = document.getElementById('photo');
+            photo.classList.toggle('large'); // Cambia la clase entre normal y grande
+        }
+
+        populateProfile();
+
+        document.getElementById('photo').addEventListener('click', toggleImageSize);
+    </script>
+
+</body>
+</html>

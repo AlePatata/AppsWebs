@@ -4,8 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../static/ver-dispositivos.css">
 </head>
 <body>
     <h1>VER DISPOSITIVOS</h1>
+    
+
+    <table class="table" id="table">
+        <thead>
+          <tr>
+            <th scope="col">Tipo</th>
+            <th scope="col">Nombre Dispositivo</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Comuna</th>
+            <th scope="col">Fotos</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr type="Notebook" name="Lenovo Slim 5" state="Dañado" comuna="Estación Central" photo="../assets/image.png">
+                <td>Notebook</td>
+                <td>Lenovo Slim 5</td>
+                <td>Dañado</td>
+                <td>Estación Central</td>
+                <td><img class="mini" src="../assets/image.png" alt="Foto 1"></td>
+            </tr>
+            <tr type="Celular" name="Samsung Galaxy 10" state="Nuevo" comuna="Huechuraba" photo="../assets/image2.jpg">
+                <td>Celular</td>
+                <td>Samsung Galaxy 10</td>
+                <td>Nuevo</td>
+                <td>Huechuraba</td>
+                <td><img class="mini" src="../assets/image2.jpg" alt="Foto 2"></td>
+            </tr>
+            <tr type="Pantalla" name="Monitor LG" state="Dañado" comuna="Colina" photo="../assets/image3.jpg">
+                <td>Pantalla</td>
+                <td>Monitor LG</td>
+                <td>Dañado</td>
+                <td>Colina</td>
+                <td><img class="mini" src="../assets/image3.jpg" alt="Foto 3"></td>
+            </tr>
+            <tr type="Consola" name="Switch" state="Usado" comuna="Tocopilla" photo="../assets/image4.jpg">
+                <td>Consola</td>
+                <td>Switch</td>
+                <td>Usado</td>
+                <td>Tocopilla</td>
+                <td><img class="mini" src="../assets/image4.jpg" alt="Foto 3"></td>
+            </tr>
+            <tr type="Audífonos" name="Bluetooth Genéricos" state="No funciona" comuna="Santiago" photo="../assets/image5.png">
+                <td>Audífonos</td>
+                <td>Bluetooth Genéricos</td>
+                <td>No funciona</td>
+                <td>Santiago</td>
+                <td><img class="mini" src="../assets/image5.png" alt="Foto 3"></td>
+            </tr>
+        </tbody>
+      </table>
+      
+    <button class="button" onclick="window.location.href = '/templates/index.html'">Volver al Menú Principal</button>
+    <script>
+        document.getElementById('table').addEventListener('click', function(event) {
+            const row = event.target.closest('tr');
+            if (row) {
+                const deviceData = {
+                    type: row.getAttribute('type'),
+                    name: row.getAttribute('name'),
+                    state: row.getAttribute('state'),
+                    comuna: row.getAttribute('comuna'),
+                    photo: row.getAttribute('photo'),
+                };
+                localStorage.setItem('deviceData', JSON.stringify(deviceData));
+                window.location.href = "/templates/informacion-dispositivo.html";
+            }
+        });
+    </script>
 </body>
 </html>

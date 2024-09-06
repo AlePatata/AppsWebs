@@ -73,6 +73,7 @@ const devices = ["Pantalla",
   "Impresora", "Parlante",
   "Audifonos", "Otro"]
 
+const states = ["Nuevo", "Usado", "Reparado", "No funciona"];
 
 const region_select = () => {
   let regionSelect = document.getElementById("select-region");
@@ -114,12 +115,24 @@ const device_select = () => {
     deviceSelect.appendChild(option);
   }
 } 
-  
+
+const state_select = () => {
+  let stateSelect = document.getElementById("select-state");
+  for (const state of states) {
+    let option = document.createElement("option");
+    option.value = state;
+    option.text = state;
+    stateSelect.appendChild(option);
+  }
+}
+ 
 document.getElementById("select-region").addEventListener("change", updateComunas);
 
 window.onload = () => {
   region_select();
   device_select();
+  state_select();
+  // // Add this line to call the poblarTipos function
 };
   
 //Mostrando /.
