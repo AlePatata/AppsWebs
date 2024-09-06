@@ -15,6 +15,26 @@
         <img id="photo" alt="Foto del Dispositivo">
     </div>
 
+    <div id="comments-section"></div>
+        <h2>Comentarios</h2>
+        <ul id="comments-list">
+            <!-- Aquí se mostrarán los comentarios -->
+        </ul>
+
+        <h3>Agregar un nuevo comentario</h3>
+        <form id="comment-form">
+            <label for="comment-name">Nombre:</label>
+            <input type="text" id="comment-name" name="comment-name" required minlength="3" maxlength="80">
+            <br><br>
+            <label for="comment-text">Comentario:</label>
+            <textarea id="comment-text" name="comment-text" rows="4" cols="50" required minlength="5"></textarea>
+            <br><br>
+            <button type="submit">Agregar comentario</button>
+        </form>
+
+        <p id="message"></p>
+    </div>
+
     <button class="button" onclick="window.location.href = '/templates/index.html'">Volver al Menú Principal</button>
     
     <script>
@@ -34,6 +54,53 @@
             console.log('Cambiando tamaño de la imagen');
             const photo = document.getElementById('photo');
             photo.classList.toggle('large'); // Cambia la clase entre normal y grande
+        }
+
+        document.getElementById('comment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const nameInput = document.getElementById('comment-name');
+            const commentText = document.getElementById('comment-text');
+            const message = document.getElementById('message');
+
+            const name = nameInput.value.trim();
+            const text = commentText.value.trim();
+
+            // Validaciones de los campos
+            if (name.length < 3 || name.length > 80) {
+                message.textContent = "El nombre debe tener entre 3 y 80 caracteres.";
+                message.style.color = "red";
+                return;
+            }
+
+            if (text.length < 5) {
+                message.textContent = "El comentario debe tener al menos 5 caracteres.";
+                message.style.color = "red";
+                return;
+            }
+
+            // Si las validaciones pasan, agregamos el comentario
+            const comment = {
+                date: new Date().toLocaleString(),
+                name: name,
+                text: text
+            };
+
+            addCommentToList(comment);
+            message.textContent = "Comentario agregado exitosamente.";
+            message.style.color = "green";
+
+            // Limpiar formulario
+            nameInput.value = '';
+            commentText.value = '';
+        });
+
+        // Función para agregar el comentario al listado
+        function addCommentToList(comment) {
+            const commentList = document.getElementById('comments-list');
+            const commentItem = document.createElement('li');
+            commentItem.textContent = `${comment.date} - ${comment.name}: ${comment.text}`;
+            commentList.appendChild(commentItem);
         }
 
         populateProfile();
