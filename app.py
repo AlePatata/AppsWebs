@@ -1,3 +1,5 @@
+
+'''
 import json
 from flask import Flask, render_template
 
@@ -36,7 +38,6 @@ def agregar_donacion():
 def ver_dispositivos():
     return render_template('ver-dispositivos.html')
 
-'''
 def hello():
     name = request.args.get("name", "World")
     return f'Hello, {escape(name)}!'

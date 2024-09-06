@@ -1,3 +1,4 @@
+
 const validateName = (name) => {
     if(!name) return false;
     let lengthValid = name.trim().length >= 3 && name.trim().length <= 80;
@@ -28,40 +29,53 @@ const validatePhoneNumber = (phoneNumber) => {
     // devolvemos la lógica AND de las validaciones.
     return lengthValid && formatValid;
 };
-  
-const validateFiles = (files) => {
-    if (!files) return false;
-  
-    // validación del número de archivos
-    let lengthValid = 1 <= files.length && files.length <= 3;
-  
-    // validación del tipo de archivo
-    let typeValid = true;
-  
-    for (const file of files) {
-      // el tipo de archivo debe ser "image/<foo>" o "application/pdf"
-      let fileFamily = file.type.split("/")[0];
-      typeValid &&= fileFamily == "image" || file.type == "application/pdf";
-    }
-  
-    // devolvemos la lógica AND de las validaciones.
-    return lengthValid && typeValid;
-};
-  
+
 const validateSelect = (select) => {
     if(!select) return false;
     return true
 };
+
+const validateDeviceName = (dname) => {
+  if(!dname) return false;
+  let lengthValid = dname.trim().length >= 3 && dname.trim().length <= 80;
+  return lengthValid;
+};
+  
+const validateFiles = (files) => {
+  if (!files) return false;
+
+  // validación del número de archivos
+  let lengthValid = 1 <= files.length && files.length <= 3;
+
+  // validación del tipo de archivo
+  let typeValid = true;
+
+  for (const file of files) {
+    // el tipo de archivo debe ser "image/<foo>" o "application/pdf"
+    let fileFamily = file.type.split("/")[0];
+    typeValid &&= fileFamily == "image" || file.type == "application/pdf";
+  }
+
+  // devolvemos la lógica AND de las validaciones.
+  return lengthValid && typeValid;
+};
+
+const validateYearsOfUse = (yearsOfUse) => {
+  if (!yearsOfUse) return false;
+  let rangeValid = yearsOfUse >= 1 && yearsOfUse <= 99;
+  return rangeValid;
+}
   
 const validateForm = () => {
+  
+    console.log('Form submitted');
     // obtener elementos del DOM usando el nombre del formulario.
     let myForm = document.forms["myForm"];
     let email = myForm["email"].value;
     let phoneNumber = myForm["phone"].value;
-    let name = myForm["nombre"].value;
-    let files = myForm["files"].files;
-    let department = myForm["select-department"].value;
-    let curso = myForm["select-course"].value;
+    let name = myForm["name"].value;
+    let region = myForm["select-region"].value;
+    let comuna = myForm["select-comuna"].value;
   
     // variables auxiliares de validación y función.
     let invalidInputs = [];
@@ -81,16 +95,44 @@ const validateForm = () => {
     if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
       setInvalidInput("Número");
     }
-    if (!validateFiles(files)) {
-      setInvalidInput("Fotos");
-    }
     if (!validateSelect(region)) {
       setInvalidInput("Región");
     }
     if (!validateSelect(comuna)) {
       setInvalidInput("Comuna");
     }
-  
+    // Validar cada dispositivo de forma individual
+    let devices = document.querySelectorAll('#deviceContainer .device'); 
+
+    if (devices !== null) {
+      devices.forEach((device, index) => {
+        let dname = device.querySelector('input[name="dname[]"]').value;
+        let deviceType = device.querySelector('select[name="select-device[]"]').value;
+        let yearsOfUse = device.querySelector('input[name="years-of-use[]"]').value;
+        let state = device.querySelector('select[name="select-state[]"]').value;
+        let files = device.querySelector('input[name="files[]"]').files;
+
+        // Agregar índice al nombre del dispositivo para diferenciar entre los dispositivos
+        let deviceNumber = `Dispositivo ${index + 1}`;
+
+        // Validaciones para cada dispositivo
+        if (!validateDeviceName(dname)) {
+            setInvalidInput(`${deviceNumber}: Nombre del dispositivo`);
+        }
+        if (!validateSelect(deviceType)) {
+            setInvalidInput(`${deviceNumber}: Tipo de dispositivo`);
+        }
+        if (!validateYearsOfUse(yearsOfUse)) {
+            setInvalidInput(`${deviceNumber}: Años de uso`);
+        }
+        if (!validateSelect(state)) {
+            setInvalidInput(`${deviceNumber}: Estado de Funcionamiento`);
+        }
+        if (!validateFiles(files)) {
+            setInvalidInput(`${deviceNumber}: Fotos`);
+        }
+      });
+    };
     // finalmente mostrar la validación
     let validationBox = document.getElementById("val-box");
     let validationMessageElem = document.getElementById("val-msg");
@@ -108,10 +150,11 @@ const validateForm = () => {
       // establecer val-msg
       validationMessageElem.innerText = "Los siguientes campos son inválidos:";
   
-      // aplicar estilos de error
+      /* aplicar estilos de error
       validationBox.style.backgroundColor = "#ffdddd";
       validationBox.style.borderLeftColor = "#f44336";
-  
+      */
+
       // hacer visible el mensaje de validación
       validationBox.hidden = false;
     } else {
@@ -122,23 +165,34 @@ const validateForm = () => {
       validationMessageElem.innerText = "¡Formulario válido! ¿Deseas enviarlo o volver?";
       validationListElem.textContent = "";
   
-      // aplicar estilos de éxito
+      /* aplicar estilos de éxito
       validationBox.style.backgroundColor = "#ddffdd";
       validationBox.style.borderLeftColor = "#4CAF50";
-  
-      // Agregar botones para enviar el formulario o volver
+      */
+
+      
+
       let submitButton = document.createElement("button");
       submitButton.innerText = "Enviar";
+      submitButton.classList.add("button");
       submitButton.style.marginRight = "10px";
       submitButton.addEventListener("click", () => {
-        // myForm.submit();
-        // no tenemos un backend al cual enviarle los datos
+        validationMessageElem.innerText = "Hemos recibido la información de su donación. Muchas gracias<3";
+        validationListElem.textContent = "";
+
+        let homeButton = document.createElement("button");
+        homeButton.innerText = "Volver al inicio";
+        homeButton.classList.add("button");
+        homeButton.addEventListener("click", () => {
+          window.location.href = "/templates/index.html";
+        });
+        validationListElem.appendChild(homeButton);
       });
   
       let backButton = document.createElement("button");
       backButton.innerText = "Volver";
+      backButton.classList.add("button");
       backButton.addEventListener("click", () => {
-        // Mostrar el formulario nuevamente
         myForm.style.display = "block";
         validationBox.hidden = true;
       });
@@ -150,6 +204,12 @@ const validateForm = () => {
       validationBox.hidden = false;
     }
 };
-  
-  
- 
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.forms['myForm'];
+  form.addEventListener('submit', (event) => {
+    console.log('Form submitted');
+    event.preventDefault(); // Prevent the default form submission
+    validateForm(); // Call the validation function
+  });
+});
