@@ -16,9 +16,32 @@ form {
     margin: 10px;
     background-color: var(--dpurple);
     border-radius: 3px;
-    border-color: var(--sdpurple);
+    border-color: var(--gray);
 }
 
+.field-name {
+    width: 80;
+}
+.field-email {
+    width: 30;
+}
+.field-number {
+    width: 15;
+}
+
+.description {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    
+}
+.description-field {
+    margin: 10px;
+    background-color: var(--dpurple);
+    border-radius: 3px;
+    border-color: var(--gray);
+    border-width: 2px;
+}
 .select {
 	right: 20px;
 	top: calc(50% - 13px);

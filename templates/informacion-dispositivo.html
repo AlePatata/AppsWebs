@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ver Dispositivos</title>
     <link rel="stylesheet" href="../static/informacion-dispositivo.css">
 </head>
 <body>
     <div class="device">
+        <h1>Información de Contacto</h1>
+        <p>Nombre: Alejandra Campos</p> 
+        <p>Correo:acampos@correo.cl </p>
+        <p>Region: Region Metropolitana de Santiago</p>
+        <p>Comuna: La Florida</p>
+        <h1>Información del Dispositivo</h1>
         <p id="type"></p>
         <p id="name"></p>
         <p id="state"></p>
@@ -15,21 +21,22 @@
         <img id="photo" alt="Foto del Dispositivo">
     </div>
 
-    <div id="comments-section"></div>
+    <div class="comments-section" id="comments-section">
         <h2>Comentarios</h2>
-        <ul id="comments-list">
-            <!-- Aquí se mostrarán los comentarios -->
-        </ul>
+        <div class="comment">
+            <ul id="comments-list">
+            </ul>
+        </div>
 
         <h3>Agregar un nuevo comentario</h3>
         <form id="comment-form">
             <label for="comment-name">Nombre:</label>
-            <input type="text" id="comment-name" name="comment-name" required minlength="3" maxlength="80">
+            <input class="field" type="text" id="comment-name" name="comment-name" required minlength="3" maxlength="80">
             <br><br>
             <label for="comment-text">Comentario:</label>
-            <textarea id="comment-text" name="comment-text" rows="4" cols="50" required minlength="5"></textarea>
+            <textarea class="description-field" id="comment-text" name="comment-text" rows="4" cols="50" required minlength="5"></textarea>
             <br><br>
-            <button type="submit">Agregar comentario</button>
+            <button class="button" type="submit">Agregar comentario</button>
         </form>
 
         <p id="message"></p>

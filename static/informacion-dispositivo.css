@@ -1,6 +1,52 @@
 
 @import url('colors.css');
 
+.device {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--lpurple);
+    border-radius: 8px;
+}
+
+.comments-section {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--lpurple);
+    border-radius: 8px;
+}
+
+.comment {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--dpurple);
+    border-radius: 3px;
+    border-color: var(--gray);
+}
+
+.field {
+    margin: 10px;
+    background-color: var(--dpurple);
+    border-radius: 3px;
+    border-color: var(--gray);
+}
+
+.button {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--ddpurple);
+    border-radius: 3px;
+    border-color: var(--sdpurple);
+    color: var(--text);
+}
+
+.description-field {
+    margin: 10px;
+    background-color: var(--dpurple);
+    border-radius: 3px;
+    border-color: var(--gray);
+    border-width: 2px;
+}
+
 #photo {
     width: 640px;
     height: 480px;

@@ -208,8 +208,7 @@ const validateForm = () => {
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.forms['myForm'];
   form.addEventListener('submit', (event) => {
-    console.log('Form submitted');
-    event.preventDefault(); // Prevent the default form submission
-    validateForm(); // Call the validation function
+    event.preventDefault(); 
+    validateForm(); 
   });
 });

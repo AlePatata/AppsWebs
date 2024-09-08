@@ -19,13 +19,13 @@
             <h2>Completa con tu información</h2>
         
             <label for="name">Nombre:</label> 
-            <input class="field" class="field" type="name" name="name" id="name" required><br>
+            <input class="field" style="width: 80ch;" type="text" name="name" id="name" required><br>
 
             <label for="email">Email:</label>
-            <input class="field" type="email" name="email" id="email" required><br>
+            <input class="field" style="width: 30ch;" type="email" name="email" id="email" required><br>
         
             <label for="phone">Número celular:</label>
-            <input class="field" type="text" name="phone" id="phone"><br>
+            <input class="field" style="width: 15ch;" type="text" name="phone" id="phone"><br>
         
             <label for="region">Región: </label>
             <select class="select" name="select-region" id="select-region" required>
@@ -42,10 +42,12 @@
             <div id="deviceContainer">
                 <div class="device">
                     <label for="dname">Nombre del dispositivo:</label>
-                    <input class="field" type="text" name="dname[]" required><br>
+                    <input class="field" style="width: 80ch;" type="text" name="dname[]" required><br>
 
-                    <label for="description">Descripción:</label>
-                    <input class="field" type="text" name="description[]" ><br>
+                    <div class="description">
+                        <label for="description">Descripción:</label>
+                        <textarea class="description-field" name="description[]" rows="4" cols="50"> </textarea><br>
+                    </div>
 
                     <label for="device">Tipo de dispositivo: </label>
                     <select class="select" id="select-device" name="select-device[]" required>
@@ -53,11 +55,11 @@
                     </select><br>
 
                     <label for="years-of-use">Años de uso:</label>
-                    <input class="field" type="text" name="years-of-use[]" required><br>
+                    <input class="field" style="width: 3ch;" type="text" name="years-of-use[]" required><br>
 
                     <label for="state">Estado de Funcionamiento: </label>
                     <select class="select" id="select-state" name="select-state[]" required>
-                        <option value="" disabled selected> Selecciona un tipo </option>
+                        <option value="" disabled selected> Selecciona un estado </option>
                     </select><br>
 
                     <label for="files">Imágenes</label>
