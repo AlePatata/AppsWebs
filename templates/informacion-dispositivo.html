@@ -3,71 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/informacion-dispositivo.css">
+    <title>Información Dispositivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/informacion-dispositivo.css') }}">
 </head>
 <body>
-    <div class="device">
-        <p id="type"></p>
-        <p id="name"></p>
-        <p id="state"></p>
+    <div class="dispositivo">
+        <p id="tipo"></p>
+        <p id="nombre"></p>
+        <p id="estado"></p>
         <p id="comuna"></p>
-        <img id="photo" alt="Foto del Dispositivo">
     </div>
 
-    <div id="comments-section"></div>
+    <div id="seccion-comentarios"></div>
         <h2>Comentarios</h2>
-        <ul id="comments-list">
+        <ul id="lista_comentarios">
             <!-- Aquí se mostrarán los comentarios -->
         </ul>
 
         <h3>Agregar un nuevo comentario</h3>
-        <form id="comment-form">
-            <label for="comment-name">Nombre:</label>
-            <input type="text" id="comment-name" name="comment-name" required minlength="3" maxlength="80">
-            <br><br>
-            <label for="comment-text">Comentario:</label>
-            <textarea id="comment-text" name="comment-text" rows="4" cols="50" required minlength="5"></textarea>
-            <br><br>
-            <button type="submit">Agregar comentario</button>
+        <form id="form_comentarios" action="{{ url_for('informacion_dispositivo', id=id)}}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="80"> <br><br>
+
+            <label for="texto">Comentario:</label>
+            <textarea id="texto" name="texto" rows="4" cols="50" required minlength="5"></textarea> <br><br>
+
+            <input type="submit" value=" Agregar comentario " ></input>
         </form>
 
         <p id="message"></p>
     </div>
 
-    <button class="button" onclick="window.location.href = '/templates/index.html'">Volver al Menú Principal</button>
+    <button class="button" type="button" id="menuButton">Volver al Menú Principal</button>
+    <script>
+        const menuUrl = "{{ url_for('menu') }}";
+    </script>
+    <script src="../static/js/base.js"></script>
     
     <script>
         function populateProfile() {
             const deviceData = JSON.parse(localStorage.getItem('deviceData'));
             if (deviceData) {
-                document.getElementById('type').textContent = `Tipo: ${deviceData.type}`;
-                document.getElementById('name').textContent = `Nombre: ${deviceData.name}`;
-                document.getElementById('state').textContent = `Estado: ${deviceData.state}`;
+                document.getElementById('tipo').textContent = `Tipo: ${deviceData.tipo}`;
+                document.getElementById('nombre').textContent = `Nombre: ${deviceData.nombre}`;
+                document.getElementById('estado').textContent = `Estado: ${deviceData.estado}`;
                 document.getElementById('comuna').textContent = `Comuna: ${deviceData.comuna}`;
-                document.getElementById('photo').src = deviceData.photo;
-                document.getElementById('photo').alt = `Foto del Dispositivo: ${deviceData.name}`;
+                //document.getElementById('photo').src = deviceData.photo;
+                //document.getElementById('photo').alt = `Foto del Dispositivo: ${deviceData.nombre}`;
             }
         }
 
         function toggleImageSize() {
             console.log('Cambiando tamaño de la imagen');
-            const photo = document.getElementById('photo');
-            photo.classList.toggle('large'); // Cambia la clase entre normal y grande
+            //const photo = document.getElementById('photo');
+            //photo.classList.toggle('large'); // Cambia la clase entre normal y grande
         }
 
-        document.getElementById('comment-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.getElementById('form_comentarios').addEventListener('submit', function(event) {
+            //event.preventDefault();
 
-            const nameInput = document.getElementById('comment-name');
-            const commentText = document.getElementById('comment-text');
+            const nombreInput = document.getElementById('nombre');
+            const commentText = document.getElementById('texto');
             const message = document.getElementById('message');
 
-            const name = nameInput.value.trim();
+            const nombre = nombreInput.value.trim();
             const text = commentText.value.trim();
 
             // Validaciones de los campos
-            if (name.length < 3 || name.length > 80) {
+            if (nombre.length < 3 || nombre.length > 80) {
                 message.textContent = "El nombre debe tener entre 3 y 80 caracteres.";
                 message.style.color = "red";
                 return;
@@ -81,9 +84,8 @@
 
             // Si las validaciones pasan, agregamos el comentario
             const comment = {
-                date: new Date().toLocaleString(),
-                name: name,
-                text: text
+                nombre: nombre,
+                texto: text,
             };
 
             addCommentToList(comment);
@@ -91,21 +93,23 @@
             message.style.color = "green";
 
             // Limpiar formulario
-            nameInput.value = '';
+            nombreInput.value = '';
             commentText.value = '';
         });
 
         // Función para agregar el comentario al listado
         function addCommentToList(comment) {
-            const commentList = document.getElementById('comments-list');
+            const commentList = document.getElementById('lista_comentarios');
             const commentItem = document.createElement('li');
-            commentItem.textContent = `${comment.date} - ${comment.name}: ${comment.text}`;
+            const date = new Date().toLocaleString(); // Get current date and time
+            commentItem.textContent = `${date} - ${comment.nombre}: ${comment.texto}`; // Note: changed 'text' to 'texto'
             commentList.appendChild(commentItem);
         }
 
+
         populateProfile();
 
-        document.getElementById('photo').addEventListener('click', toggleImageSize);
+        //document.getElementById('photo').addEventListener('click', toggleImageSize);
     </script>
 
 </body>

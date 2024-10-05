@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/ver-dispositivos.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ver-dispositivos.css') }}">
 </head>
 <body>
     <h1>VER DISPOSITIVOS</h1>
@@ -58,21 +58,26 @@
             </tr>
         </tbody>
       </table>
-      
-    <button class="button" onclick="window.location.href = '/templates/index.html'">Volver al Menú Principal</button>
+
+    <button class="button" type="button" id="menuButton">Volver al Menú Principal</button>
+    <script>
+        const menuUrl = "{{ url_for('menu') }}";
+    </script>
+    <script src="../static/js/base.js"></script>
+
     <script>
         document.getElementById('table').addEventListener('click', function(event) {
             const row = event.target.closest('tr');
             if (row) {
                 const deviceData = {
                     type: row.getAttribute('type'),
-                    name: row.getAttribute('name'),
+                    nombre: row.getAttribute('nombre'),
                     state: row.getAttribute('state'),
                     comuna: row.getAttribute('comuna'),
                     photo: row.getAttribute('photo'),
                 };
                 localStorage.setItem('deviceData', JSON.stringify(deviceData));
-                window.location.href = "/templates/informacion-dispositivo.html";
+                window.location.assign("{{ url_for('informacion_dispositivo') }}" );
             }
         });
     </script>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Donación</title>
-    <link rel="stylesheet" href="../static/agregar-donacion.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar-donacion.css') }}">
 </head>
 <body>
     <h1>Agregar Donacion</h1>
@@ -15,11 +15,11 @@
             <h2 id="val-msg"></h2>
             <ul id="val-list"></ul>
         </div>
-        <form name="myForm" method="post" enctype="multipart/form-data">
+        <form enctype="multipart/form-data" action="agregar_donacion" method="post" name="myForm"  >
             <h2>Completa con tu información</h2>
         
-            <label for="name">Nombre:</label> 
-            <input class="field" class="field" type="name" name="name" id="name" required><br>
+            <label for="nombre">Nombre:</label> 
+            <input class="field" class="field" type="nombre" name="nombre" id="nombre" required><br>
 
             <label for="email">Email:</label>
             <input class="field" type="email" name="email" id="email" required><br>
@@ -41,8 +41,8 @@
             
             <div id="deviceContainer">
                 <div class="device">
-                    <label for="dname">Nombre del dispositivo:</label>
-                    <input class="field" type="text" name="dname[]" required><br>
+                    <label for="dnombre">Nombre del dispositivo:</label>
+                    <input class="field" type="text" name="dnombre[]" required><br>
 
                     <label for="description">Descripción:</label>
                     <input class="field" type="text" name="description[]" ><br>
@@ -52,8 +52,8 @@
                         <option value="" disabled selected> Selecciona un tipo </option>
                     </select><br>
 
-                    <label for="years-of-use">Años de uso:</label>
-                    <input class="field" type="text" name="years-of-use[]" required><br>
+                    <label for="years_of_use">Años de uso:</label>
+                    <input class="field" type="text" name="years_of_use[]" required><br>
 
                     <label for="state">Estado de Funcionamiento: </label>
                     <select class="select" id="select-state" name="select-state[]" required>
@@ -75,10 +75,14 @@
         
         
     </div>
-    <button class="button" onclick="window.location.href = '/templates/index.html'">Volver al Menú Principal</button>
-    <script src="../static/validation.js"></script>
-    <script src="../static/select.js"></script>
-    <script src="../static/new-device.js"></script>
+    <button class="button" type="button" id="menuButton">Volver al Menú Principal</button>
+    <script>
+        const menuUrl = "{{ url_for('menu') }}";
+    </script>
+    <script src="../static/js/base.js"></script>
+    <script src="../static/js/validation.js"></script>
+    <script src="../static/js/select.js"></script>
+    <script src="../static/js/new-device.js"></script>
 
 </body>
 
