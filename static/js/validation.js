@@ -17,14 +17,14 @@ const validateEmail = (email) => {
     return lengthValid && formatValid;
 };
   
-const validatePhoneNumber = (phoneNumber) => {
-    if (!phoneNumber) return false;
+const validatecelularNumber = (celularNumber) => {
+    if (!celularNumber) return false;
     // validación de longitud
-    let lengthValid = phoneNumber.length >= 8;
+    let lengthValid = celularNumber.length >= 8;
   
     // validación de formato
     let re = /^[0-9]+$/;
-    let formatValid = re.test(phoneNumber);
+    let formatValid = re.test(celularNumber);
   
     // devolvemos la lógica AND de las validaciones.
     return lengthValid && formatValid;
@@ -67,12 +67,9 @@ const validateYearsOfUse = (yearsOfUse) => {
 }
   
 const validateForm = () => {
-  
-    console.log('Form submitted');
-    // obtener elementos del DOM usando el nombre del formulario.
-    let myForm = document.forms["myForm"];
+    let myForm = document.forms["form-donacion"];
     let email = myForm["email"].value;
-    let phoneNumber = myForm["phone"].value;
+    let celularNumber = myForm["celular"].value;
     let nombre = myForm["nombre"].value;
     let region = myForm["select-region"].value;
     let comuna = myForm["select-comuna"].value;
@@ -92,7 +89,7 @@ const validateForm = () => {
     if (!validateEmail(email)) {
       setInvalidInput("Email");
     }
-    if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
+    if (celularNumber && !validatecelularNumber(celularNumber)) {
       setInvalidInput("Número");
     }
     if (!validateSelect(region)) {
@@ -108,7 +105,7 @@ const validateForm = () => {
       devices.forEach((device, index) => {
         let dnombre = device.querySelector('input[name="dnombre[]"]').value;
         let deviceType = device.querySelector('select[name="select-device[]"]').value;
-        let yearsOfUse = device.querySelector('input[name="years-of-use[]"]').value;
+        let yearsOfUse = device.querySelector('input[name="years_of_use[]"]').value;
         let state = device.querySelector('select[name="select-state[]"]').value;
         let files = device.querySelector('input[name="files[]"]').files;
 
@@ -149,11 +146,6 @@ const validateForm = () => {
       }
       // establecer val-msg
       validationMessageElem.innerText = "Los siguientes campos son inválidos:";
-  
-      /* aplicar estilos de error
-      validationBox.style.backgroundColor = "#ffdddd";
-      validationBox.style.borderLeftColor = "#f44336";
-      */
 
       // hacer visible el mensaje de validación
       validationBox.hidden = false;
@@ -164,13 +156,6 @@ const validateForm = () => {
       // establecer mensaje de éxito
       validationMessageElem.innerText = "¡Formulario válido! ¿Deseas enviarlo o volver?";
       validationListElem.textContent = "";
-  
-      /* aplicar estilos de éxito
-      validationBox.style.backgroundColor = "#ddffdd";
-      validationBox.style.borderLeftColor = "#4CAF50";
-      */
-
-      
 
       let submitButton = document.createElement("button");
       submitButton.innerText = "Enviar";
@@ -203,13 +188,17 @@ const validateForm = () => {
       // hacer visible el mensaje de validación
       validationBox.hidden = false;
     }
+    return isValid;
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.forms['myForm'];
-  form.addEventListener('submit', (event) => {
-    console.log('Form submitted');
-    event.preventDefault(); // Prevent the default form submission
-    validateForm(); // Call the validation function
-  });
+document.getElementById('form-donacion').addEventListener('submit', (event) => {
+  event.preventDefault();
+  console.log("Formulario enviado");
+  if(validateForm()) {
+    console.log("Formulario válido");
+    event.target.submit();
+  } else
+  {
+    console.log("Formulario inválido");
+  }
 });

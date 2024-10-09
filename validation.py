@@ -1,4 +1,6 @@
 import re
+from werkzeug.datastructures import FileStorage
+
 
 def validate_nombre(nombre):
     if not nombre:
@@ -12,11 +14,11 @@ def validate_email(email):
     format_valid = re.match(r'^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$', email)
     return length_valid and format_valid
 
-def validate_phone_number(phone_number):
-    if not phone_number:
+def validate_celular_number(celular_number):
+    if not celular_number:
         return False
-    length_valid = len(phone_number) >= 8
-    format_valid = re.match(r'^[0-9]+$', phone_number)
+    length_valid = len(celular_number) >= 8
+    format_valid = re.match(r'^[0-9]+$', celular_number)
     return length_valid and format_valid
 
 def validate_select(select):
@@ -27,8 +29,9 @@ def validate_device_nombre(dnombre):
         return False
     return 3 <= len(dnombre.strip()) <= 80
 
-def validate_files(files):
-    if not files or len(files) == 0:
+
+def validate_files(files: FileStorage):
+    if not files or (files) == 0:
         return False
     length_valid = 1 <= len(files) <= 3
     type_valid = all(
@@ -65,7 +68,7 @@ def validate_form(data):
     # Extract form data
     nombre = data.get("nombre")
     email = data.get("email")
-    phone_number = data.get("phone")
+    celular_number = data.get("celular")
     region = data.get("region")
     comuna = data.get("comuna")
     devices = data.getlist("devices")  # Assuming device data is in a list of dictionaries
@@ -77,7 +80,7 @@ def validate_form(data):
     if not validate_email(email):
         set_invalid_input("Email")
 
-    if phone_number and not validate_phone_number(phone_number):
+    if celular_number and not validate_celular_number(celular_number):
         set_invalid_input("Número")
 
     if not validate_select(region):

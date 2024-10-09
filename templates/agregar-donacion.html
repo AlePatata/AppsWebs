@@ -15,17 +15,17 @@
             <h2 id="val-msg"></h2>
             <ul id="val-list"></ul>
         </div>
-        <form enctype="multipart/form-data" action="agregar_donacion" method="post" name="myForm"  >
+        <form id="form-donacion" enctype="multipart/form-data" action="/agregar-donacion" method="POST" >
             <h2>Completa con tu información</h2>
         
             <label for="nombre">Nombre:</label> 
-            <input class="field" class="field" type="nombre" name="nombre" id="nombre" required><br>
+            <input class="field" type="nombre" name="nombre" id="nombre" required><br>
 
             <label for="email">Email:</label>
             <input class="field" type="email" name="email" id="email" required><br>
         
-            <label for="phone">Número celular:</label>
-            <input class="field" type="text" name="phone" id="phone"><br>
+            <label for="celular">Número celular:</label>
+            <input class="field" type="text" name="celular" id="celular"><br>
         
             <label for="region">Región: </label>
             <select class="select" name="select-region" id="select-region" required>
@@ -69,20 +69,19 @@
 
             <button class="button" type="button" id="addDeviceButton">Agregar otro dispositivo</button>
             <button class="button" type="button" id="removeDeviceButton">Eliminar dispositivo</button>
-            <button class="button"type="submit">Enviar</button>
-      
+            <button class="button" type="submit" id ="buttonsubmit"> Enviar </button>
         </form>  
         
         
     </div>
     <button class="button" type="button" id="menuButton">Volver al Menú Principal</button>
     <script>
-        const menuUrl = "{{ url_for('menu') }}";
+        const menuUrl = {{ url_for('menu') }};
     </script>
-    <script src="../static/js/base.js"></script>
-    <script src="../static/js/validation.js"></script>
-    <script src="../static/js/select.js"></script>
-    <script src="../static/js/new-device.js"></script>
+    <script src={{ url_for('static', filename='js/base.js') }}></script>
+    <script src={{ url_for('static', filename='js/validation.js')}}></script>
+    <script src={{ url_for('static', filename='js/select.js') }}></script>
+    <script src={{ url_for('static', filename='js/new-device.js') }}></script>
 
 </body>
 
