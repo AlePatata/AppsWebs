@@ -2,7 +2,9 @@
 const validatenombre = (nombre) => {
     if(!nombre) return false;
     let lengthValid = nombre.trim().length >= 3 && nombre.trim().length <= 80;
-    return lengthValid;
+    let re2 = /^[a-zA-Z\s]+$/; //nombre sin y con espacios
+    let formatValid = re2.test(nombre);
+    return formatValid && lengthValid;
 };
   
 const validateEmail = (email) => {
@@ -41,16 +43,16 @@ const validateDevicenombre = (dnombre) => {
   return lengthValid;
 };
   
-const validateFiles = (files) => {
-  if (!files) return false;
+const validateFiles = (archivos) => {
+  if (!archivos) return false;
 
   // validación del número de archivos
-  let lengthValid = 1 <= files.length && files.length <= 3;
+  let lengthValid = 1 <= archivos.length && archivos.length <= 3;
 
   // validación del tipo de archivo
   let typeValid = true;
 
-  for (const file of files) {
+  for (const file of archivos) {
     // el tipo de archivo debe ser "image/<foo>" o "application/pdf"
     let fileFamily = file.type.split("/")[0];
     typeValid &&= fileFamily == "image" || file.type == "application/pdf";
@@ -107,7 +109,7 @@ const validateForm = () => {
         let deviceType = device.querySelector('select[name="select-device[]"]').value;
         let yearsOfUse = device.querySelector('input[name="years_of_use[]"]').value;
         let state = device.querySelector('select[name="select-state[]"]').value;
-        let files = device.querySelector('input[name="files[]"]').files;
+        let archivos = device.querySelector('input[name="files[]"]').files;
 
         // Agregar índice al nombre del dispositivo para diferenciar entre los dispositivos
         let deviceNumber = `Dispositivo ${index + 1}`;
@@ -125,7 +127,7 @@ const validateForm = () => {
         if (!validateSelect(state)) {
             setInvalidInput(`${deviceNumber}: Estado de Funcionamiento`);
         }
-        if (!validateFiles(files)) {
+        if (!validateFiles(archivos)) {
             setInvalidInput(`${deviceNumber}: Fotos`);
         }
       });
@@ -134,8 +136,7 @@ const validateForm = () => {
     let validationBox = document.getElementById("val-box");
     let validationMessageElem = document.getElementById("val-msg");
     let validationListElem = document.getElementById("val-list");
-    let formContainer = document.querySelector(".main-container");
-  
+
     if (!isValid) {
       validationListElem.textContent = "";
       // agregar elementos inválidos al elemento val-list.
@@ -150,55 +151,45 @@ const validateForm = () => {
       // hacer visible el mensaje de validación
       validationBox.hidden = false;
     } else {
-      // Ocultar el formulario
-      myForm.style.display = "none";
-  
-      // establecer mensaje de éxito
-      validationMessageElem.innerText = "¡Formulario válido! ¿Deseas enviarlo o volver?";
+      validationBox.hidden = true;
+      let confirmationBox = document.getElementById("popup-box");
+      let confirmationMessageElem = document.getElementById("popup-msg");
+    
+      confirmationBox.hidden = false;
+      confirmationMessageElem.innerText = "¡Formulario válido! ¿Deseas enviarlo o volver?";
+      
+      // botones
       validationListElem.textContent = "";
-
-      let submitButton = document.createElement("button");
-      submitButton.innerText = "Enviar";
-      submitButton.classList.add("button");
-      submitButton.style.marginRight = "10px";
-      submitButton.addEventListener("click", () => {
+      let secondSubmitButton = document.createElement("button");
+      secondSubmitButton.addEventListener("click", () => {
         validationMessageElem.innerText = "Hemos recibido la información de su donación. Muchas gracias<3";
         validationListElem.textContent = "";
 
         let homeButton = document.createElement("button");
         homeButton.innerText = "Volver al inicio";
         homeButton.classList.add("button");
-        homeButton.addEventListener("click", () => {
-          window.location.href = "/templates/index.html";
-        });
+        homeButton.addEventListener("click", SUBMIT());
         validationListElem.appendChild(homeButton);
       });
   
       let backButton = document.createElement("button");
       backButton.innerText = "Volver";
       backButton.classList.add("button");
-      backButton.addEventListener("click", () => {
-        myForm.style.display = "block";
-        validationBox.hidden = true;
-      });
+      backButton.addEventListener("click", SUBMIT());
   
-      validationListElem.appendChild(submitButton);
+      validationListElem.appendChild(secondSubmitButton);
       validationListElem.appendChild(backButton);
   
       // hacer visible el mensaje de validación
       validationBox.hidden = false;
     }
-    return isValid;
 };
 
-document.getElementById('form-donacion').addEventListener('submit', (event) => {
-  event.preventDefault();
-  console.log("Formulario enviado");
-  if(validateForm()) {
-    console.log("Formulario válido");
-    event.target.submit();
-  } else
-  {
-    console.log("Formulario inválido");
-  }
-});
+const SUBMIT = () => {
+  window.location.href = "/";
+  let form = document.getElementById("form_donacion");
+  form.submit();
+};
+
+let submitButton = document.getElementById("submit-button");
+submitButton.addEventListener("click", validateForm);

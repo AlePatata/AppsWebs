@@ -1,89 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Donación</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar-donacion.css') }}">
-</head>
-<body>
-    <h1>Agregar Donacion</h1>
+{% extends "base.html" %}
 
+{% block title %}Agregar Donación{% endblock %}
+    
+{% block css %}
+    <link rel="stylesheet" 
+          href="{{ url_for('static', filename='css/agregar-donacion.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Agregar Donación</h1>
 
     <div class="main-container">
-        <div id="val-box" hidden>
-            <h2 id="val-msg"></h2>
-            <ul id="val-list"></ul>
-        </div>
-        <form id="form-donacion" enctype="multipart/form-data" action="/agregar-donacion" method="POST" >
+        
+        <form id="form-donacion" enctype="multipart/form-data" action="{{ url_for('agregar_donacion')}}" method="POST" >
             <h2>Completa con tu información</h2>
         
-            <label for="nombre">Nombre:</label> 
+            <label >Nombre:</label> 
             <input class="field" type="nombre" name="nombre" id="nombre" required><br>
 
-            <label for="email">Email:</label>
+            <label >Email:</label>
             <input class="field" type="email" name="email" id="email" required><br>
         
-            <label for="celular">Número celular:</label>
+            <label >Número celular:</label>
             <input class="field" type="text" name="celular" id="celular"><br>
         
-            <label for="region">Región: </label>
-            <select class="select" name="select-region" id="select-region" required>
+            <label >Región: </label>
+            <select class="select" name="region" id="region" required>
                 <option value=""> Selecciona una región </option>
+                {% for region in regiones %} 
+                    <option value={{region[0]}}> {{region[1]}} </option>
+                {% endfor %}
             </select><br>
-        
-            <label for="comuna">Comuna:</label>
-            <select class="select" name="select-comuna" id="select-comuna" required>
+
+            <label >Comuna:</label>
+            <select class="select" name="comuna" id="comuna" required>
                 <option value=""> Selecciona una comuna </option>
+                {% for comuna in comunas %} 
+                    <option value={{comuna[0]}}> {{comuna[1]}} </option>
+                {% endfor %}
             </select><br>
             
             <h2>Información del Dispositivo</h2>
-            
-            <div id="deviceContainer">
-                <div class="device">
-                    <label for="dnombre">Nombre del dispositivo:</label>
+            <div id="deviceList">
+                <div id="deviceContainer" class="device">
+                    <label >Nombre del dispositivo:</label>
                     <input class="field" type="text" name="dnombre[]" required><br>
 
-                    <label for="description">Descripción:</label>
+                    <label >Descripción:</label>
                     <input class="field" type="text" name="description[]" ><br>
 
-                    <label for="device">Tipo de dispositivo: </label>
-                    <select class="select" id="select-device" name="select-device[]" required>
+                    <label >Tipo de dispositivo: </label>
+                    <select class="select" id="tipo" name="tipo[]" required>
                         <option value="" disabled selected> Selecciona un tipo </option>
                     </select><br>
 
-                    <label for="years_of_use">Años de uso:</label>
-                    <input class="field" type="text" name="years_of_use[]" required><br>
+                    <label >Años de uso:</label>
+                    <input class="field" type="text" name="anos_uso[]" required><br>
 
-                    <label for="state">Estado de Funcionamiento: </label>
-                    <select class="select" id="select-state" name="select-state[]" required>
+                    <label >Estado de Funcionamiento: </label>
+                    <select class="select" id="estado" name="estado[]" required>
                         <option value="" disabled selected> Selecciona un tipo </option>
                     </select><br>
 
-                    <label for="files">Imágenes</label>
-                    <input class="field" type="file" name="files[]" multiple accept="image/*,.pdf" required><br>
+                    <label >Imágenes</label>
+                    <div id="files" class="file-container">
+                        <input class="field" type="file" id="addFile" name="files_0[]" multiple accept="image/png, image/jpg, image/gif, image/jpeg" required><br>
+                    </div>  
                     
                     <hr class="degradao">
                 </div>
             </div>
-
             <button class="button" type="button" id="addDeviceButton">Agregar otro dispositivo</button>
             <button class="button" type="button" id="removeDeviceButton">Eliminar dispositivo</button>
-            <button class="button" type="submit" id ="buttonsubmit"> Enviar </button>
+            <button class="button" type="submit" id ="submit-button"> Enviar </button>
         </form>  
-        
-        
+
+        <div id="popup-box" hidden>
+            <h2 id="popup-msg"></h2>
+            <button id="b1"> Sí, confirmo </button>
+            <button id="b2"> No, quiero volver al formulario </button>
+        </div>
     </div>
     <button class="button" type="button" id="menuButton">Volver al Menú Principal</button>
+    
+{% endblock content %}
+
+{% block javascript %}    
     <script>
-        const menuUrl = {{ url_for('menu') }};
+        window.regiones = {{ regiones | tojson }};
+        window.comunas = {{ comunas | tojson }};
     </script>
     <script src={{ url_for('static', filename='js/base.js') }}></script>
     <script src={{ url_for('static', filename='js/validation.js')}}></script>
     <script src={{ url_for('static', filename='js/select.js') }}></script>
     <script src={{ url_for('static', filename='js/new-device.js') }}></script>
 
-</body>
-
-
-</html>
+{% endblock %}

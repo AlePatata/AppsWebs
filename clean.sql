@@ -1,0 +1,6 @@
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM contacto;
+DELETE FROM dispositivo;
+DELETE FROM archivo;
+
+SET SQL_SAFE_UPDATES = 1;

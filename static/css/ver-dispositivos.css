@@ -27,3 +27,8 @@ table {
     position: relative;
     display: inline-block;
 }
+
+.text {
+    color: var(--text);
+    text-decoration: none;
+}

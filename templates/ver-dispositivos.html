@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+{% extends "base.html" %}
+
+{% block title%}Document{% endblock %}
+
+{% block css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/ver-dispositivos.css') }}">
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
     <h1>VER DISPOSITIVOS</h1>
-    
 
     <table class="table" id="table">
         <thead>
@@ -20,48 +19,25 @@
             <th scope="col">Fotos</th>
           </tr>
         </thead>
+        
         <tbody>
-            <tr id ="1" type="Notebook" name="Lenovo Slim 5" state="Dañado" comuna="Estación Central" photo="../assets/image.png">
-                <td>Notebook</td>
-                <td>Lenovo Slim 5</td>
-                <td>Dañado</td>
-                <td>Estación Central</td>
-                <td><img class="mini" src="../assets/image.png" alt="Foto 1"></td>
-            </tr>
-            <tr id ="2" type="Celular" name="Samsung Galaxy 10" state="Nuevo" comuna="Huechuraba" photo="../assets/image2.jpg">
-                <td>Celular</td>
-                <td>Samsung Galaxy 10</td>
-                <td>Nuevo</td>
-                <td>Huechuraba</td>
-                <td><img class="mini" src="../assets/image2.jpg" alt="Foto 2"></td>
-            </tr>
-            
+            {% for dispositivo in dispositivos %}
+                <tr id ="{{ dispositivo[0] }}" tipo="{{ dispositivo[1] }}" nombre="{{ dispositivo[2] }}" estado="{{ dispositivo[3] }}" comuna="{{ dispositivo[4]}}" imagen="{{ dispositivo[5].path_image }}">
+                    <!-- 0=tipo, 1=nombre, 2=estado, 3=comuna, 4=id, 5=path_img -->
+                    <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[0] }} </a></td>
+                    <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[1] }} </a></td>
+                    <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[2] }} </a></td>
+                    <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[3] }} </a></td>
+                    <td> <img class="mini" src="{{ dispositivo[5].path_image }}" alt="Foto 1"> </td>
+                </tr>
+            {% endfor %}
         </tbody>
       </table>
 
     <button class="button" type="button" id="menuButton">Volver al Menú Principal</button>
-    <script>
-        const menuUrl = "{{ url_for('menu') }}";
-    </script>
-    <script src="../static/js/base.js"></script>
+{% endblock content %}
 
-    <script>
-        document.getElementById('table').addEventListener('click', function(event) {
-            const row = event.target.closest('tr');
-            if (row) {
-                const deviceData = {
-                    type: row.getAttribute('type'),
-                    nombre: row.getAttribute('nombre'),
-                    state: row.getAttribute('state'),
-                    comuna: row.getAttribute('comuna'),
-                    photo: row.getAttribute('photo'),
-                    id: row.getAttribute('id')
-                };
-                localStorage.setItem('deviceData', JSON.stringify(deviceData));
-                
-                window.location.assign("{{ url_for('informacion_dispositivo', id = id) }}"); 
-            }
-        });
-    </script>
-</body>
-</html>
+{% block javascript %}
+    <script src={{url_for('static',filename='js/base.js')}}></script>
+    <script src={{url_for('static',filename='js/ver-dispositivos.js')}}></script>
+{% endblock %}

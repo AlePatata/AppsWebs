@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Menú{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" 
+          href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+
+{% block content %}
     <div class="container">
         <h2>Menú</h2>
         <table class="menu">
-            
             <tr> <th><a id="e1" class= "link" href="{{ url_for('agregar_donacion') }}" 
                 onmouseenter="overSomething('e1')"
                 onmouseleave="leaveSomething('e1')"> Agregar Donación </a></th> </tr>
@@ -19,7 +20,10 @@
                 onmouseleave="leaveSomething('e2')"> Ver Dispositivos </a></th> </tr>
         </table>
     </div>
+{% endblock %}
 
+
+{% block javascript %}
     <script>
         const overSomething = (elementId) => {
             var element = document.getElementById(elementId);
@@ -31,5 +35,4 @@
             element.style = "menu";
         }
     </script>
-</body>
-</html>
+{% endblock %}

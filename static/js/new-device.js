@@ -1,24 +1,44 @@
 document.getElementById('addDeviceButton').addEventListener('click', function() {
     var deviceContainer = document.getElementById('deviceContainer');
-    var newDevice = deviceContainer.children[0].cloneNode(true);
+    var deviceList = document.getElementById('deviceList');
+    
+    var newDeviceContainer = deviceContainer.cloneNode(true);
 
-    // Limpiar los valores de los campos duplicados
-    var inputs = newDevice.getElementsByTagnombre('input');
+    // Generate a unique index for each new device
+    var newIndex = deviceList.getElementsByClassName('device').length;
+
+    // Update the name of input fields and remove the id
+    var inputs = newDeviceContainer.getElementsByTagName('input');
     for (var i = 0; i < inputs.length; i++) {
-        inputs[i].value = '';  // Limpiar el valor de los campos
+        if (inputs[i].type !== 'file') {
+            inputs[i].value = '';  // Clear text fields
+        } else {
+            inputs[i].name = `files_${newIndex}[]`;  // Unique name for file inputs
+        }
+        inputs[i].removeAttribute('id');  // Remove duplicated id
     }
 
-    var selects = newDevice.getElementsByTagnombre('select');
+    // Remove id from select elements and reset their values
+    var selects = newDeviceContainer.getElementsByTagName('select');
     for (var i = 0; i < selects.length; i++) {
-        selects[i].selectedIndex = 0;  // Reiniciar los selectores
+        selects[i].removeAttribute('id');
+        selects[i].selectedIndex = 0;  // Reset dropdown to default
     }
 
-    deviceContainer.appendChild(newDevice);  // Añadir el nuevo conjunto de campos
+    // Remove the id of the cloned device container itself
+    newDeviceContainer.removeAttribute('id');
+    
+    // Append the cloned and modified container to the list
+    deviceList.appendChild(newDeviceContainer);
 });
 
 document.getElementById('removeDeviceButton').addEventListener('click', function() {
-    var deviceContainer = document.getElementById('deviceContainer');
-    if (deviceContainer.children.length > 1) {
-        deviceContainer.removeChild(deviceContainer.children[deviceContainer.children.length - 1]);
+    var deviceList = document.getElementById('deviceList');
+    var devices = deviceList.getElementsByClassName('device');
+    
+    if (devices.length > 1) {
+        deviceList.removeChild(devices[devices.length - 1]);  // Remove the last device
+    } else {
+        alert("Debes tener al menos un dispositivo.");  // Prevent removing the last one
     }
 });

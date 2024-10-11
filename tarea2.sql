@@ -1,5 +1,3 @@
-DROP USER IF EXISTS 'cc5002';
-CREATE USER 'cc5002' IDENTIFIED BY 'cc5002';
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -20,7 +18,7 @@ USE `tarea2` ;
 -- Table `tarea2`.`region`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tarea2`.`region` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `nombre` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -67,7 +65,7 @@ ENGINE = InnoDB;
 -- Table `tarea2`.`dispositivo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tarea2`.`dispositivo` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `contacto_id` INT NOT NULL,
   `nombre` VARCHAR(80) NOT NULL,
   `descripcion` VARCHAR(300) NULL,
