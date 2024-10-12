@@ -12,7 +12,6 @@ const updateComunas = () => {
   comunas.forEach(comuna => {
     
     if (comuna[2] == region) {
-      console.log(comuna[2]);
       let option = document.createElement("option");
       option.value = comuna[0];
       option.text = comuna[1];

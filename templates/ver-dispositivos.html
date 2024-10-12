@@ -22,13 +22,15 @@
         
         <tbody>
             {% for dispositivo in dispositivos %}
-                <tr id ="{{ dispositivo[0] }}" tipo="{{ dispositivo[1] }}" nombre="{{ dispositivo[2] }}" estado="{{ dispositivo[3] }}" comuna="{{ dispositivo[4]}}" imagen="{{ dispositivo[5].path_image }}">
+                <tr id ="{{ dispositivo[4] }}" tipo="{{ dispositivo[1] }}" nombre="{{ dispositivo[2] }}" estado="{{ dispositivo[3] }}" comuna="{{ dispositivo[4]}}" imagen="{{ dispositivo[5].path_image }}">
                     <!-- 0=tipo, 1=nombre, 2=estado, 3=comuna, 4=id, 5=path_img -->
                     <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[0] }} </a></td>
                     <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[1] }} </a></td>
                     <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[2] }} </a></td>
                     <td> <a class="text" href="{{ url_for('informacion_dispositivo', dispositivo_id = dispositivo[4]) }}"> {{ dispositivo[3] }} </a></td>
-                    <td> <img class="mini" src="{{ dispositivo[5].path_image }}" alt="Foto 1"> </td>
+                    <td> <div class="photo">
+                        <img class="mini" src="{{ dispositivo[5].path_image }}" alt="Foto 1"> 
+                    </div></td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -38,6 +40,10 @@
 {% endblock content %}
 
 {% block javascript %}
+    <script>
+        const informacionDispositivoUrl = "{{ url_for('informacion_dispositivo', dispositivo_id=0) }}"; // Deja dispositivo_id vacío
+    </script>
+        
     <script src={{url_for('static',filename='js/base.js')}}></script>
     <script src={{url_for('static',filename='js/ver-dispositivos.js')}}></script>
 {% endblock %}

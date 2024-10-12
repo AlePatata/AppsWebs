@@ -12,8 +12,8 @@ def validate_nombre(nombre):
 def validate_email(email):
     if not email:
         return False
-    length_valid = len(email) > 15
-    format_valid = re.match(r'^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$', email)
+    length_valid = len(email) < 31
+    format_valid = re.match(r'^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$', email)
     return length_valid and format_valid
 
 def validate_celular_number(celular_number):

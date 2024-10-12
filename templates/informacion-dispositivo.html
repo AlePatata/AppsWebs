@@ -37,7 +37,7 @@
     </div>
     <div class="imagenes">
         <h2>Imágenes</h2>
-        <div class="imagen">
+        <div class="photo">
             <img id="photo" src="{{ dispositivo[4] }}" alt="Foto 1">
         </div>
     </div>
@@ -47,9 +47,7 @@
             {% for comentario in comentarios %}
                 <h4>{{comentario[1]}}</h4>
                 <p>{{comentario[2]}}</p>
-
             {% endfor %}
-
         </ul>
     </div>
         <h3>Agregar un nuevo comentario</h3>
@@ -61,7 +59,7 @@
             <label>Comentario:</label>
             <textarea id="texto" name="texto" rows="4" cols="50" required minlength="5"></textarea> <br><br>
 
-            <input type="submit" value=" Agregar comentario " class="button"></input>
+            <input id="comentar" name="comentar" type="button" value=" Agregar comentario " class="button"></input>
         </form>
         <p id="message"></p>
     </div>
@@ -71,6 +69,5 @@
 
 {% block javascript %}
     <script src="{{ url_for('static', filename='js/base.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
     <script src="{{ url_for('static', filename='js/validate-comment.js') }}"></script>
 {% endblock %}

@@ -2,14 +2,14 @@
 @import url('colors.css');
 
 #photo {
-    width: 640px;
-    height: 480px;
+    max-width: 640px;
+    max-height: 480px;
     cursor: pointer; 
 }
 
 #photo.large {
-    width: 1280px;
-    height: 1024px;
+    max-width: 1280px;
+    max-height: 1024px;
 }
 
 table {
@@ -21,8 +21,8 @@ table {
 }
 
 .mini {
-    width: 120px;
-    height: 120px;
+    max-width: 60px;
+    height: 60px;
 }
 
 .button {

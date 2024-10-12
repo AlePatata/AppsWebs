@@ -1,6 +1,7 @@
+USE tarea2;
 SET SQL_SAFE_UPDATES = 0;
+DELETE FROM archivo;
+DELETE FROM comentario;
 DELETE FROM contacto;
 DELETE FROM dispositivo;
-DELETE FROM archivo;
-
 SET SQL_SAFE_UPDATES = 1;

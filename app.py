@@ -37,13 +37,12 @@ def agregar_donacion():
         estados_dispositivos = request.form.getlist('estado[]')
         archivos = []  
         for i in range(len(nombres_dispositivos)):
-            print(request.files.getlist('files[]'))
             archivos.append(request.files.getlist(f'files_{i}[]'))
         
         if validation(nombre, email, celular, region, comuna, nombres_dispositivos, descripciones, tipos_dispositivos, anos_uso, estados_dispositivos, archivos):
             db.insert_contacto(nombre, email, celular, comuna)
-            contacto_id = db.get_contacto_id(nombre)
             
+            contacto_id = db.get_contacto_id(nombre)
             
             for i in range(len(nombres_dispositivos)):
                 db.insert_dispositivo(contacto_id, nombres_dispositivos[i], descripciones[i], tipos_dispositivos[i], anos_uso[i], estados_dispositivos[i])
@@ -54,10 +53,9 @@ def agregar_donacion():
                     agregar_file(file, dispositivo_id)
         else:
             error = 'Error en los datos ingresados'
-        return redirect(url_for('menu'))   
         
-    elif request.method == 'GET':
-        return render_template('agregar-donacion.html', error=error, regiones=regiones, comunas=comunas)     # Recarga la pagina   
+    return render_template('agregar-donacion.html', error=error, regiones=regiones, comunas=comunas)     # Recarga la pagina   
+
 
 def agregar_file(file, dispositivo_id):
     _filename_hash = hashlib.sha256(
@@ -124,7 +122,6 @@ def informacion_dispositivo(dispositivo_id):
     imagen = db.get_archivos(dispositivo_id)
     imagen = url_for('static', filename='/uploads/'+imagen[1])
     dispositivo = [tipo, nombre_dispositivo, estado, comuna, imagen]
-    print(imagen)
     
 
     return render_template('informacion-dispositivo.html', dispositivo_id=dispositivo_id, comentarios=comentarios, dispositivo=dispositivo)

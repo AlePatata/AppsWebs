@@ -1,19 +1,17 @@
 
 function toggleImageSize() {
     const photo = document.getElementById('photo');
-    photo.classList.toggle('large'); 
-    
+    photo.classList.toggle('large');    
 }
 
-document.getElementById('form_comentarios').addEventListener('submit', function(event) {
-    //event.preventDefault();
-
+const validateComment = () => {
+    document.getElementById('form_comentarios').addEventListener('submit', function() {
     const nombreInput = document.getElementById('nombre');
     const commentText = document.getElementById('texto');
     const message = document.getElementById('message');
 
     const nombre = nombreInput.value.trim();
-    const text = commentText.value.trim();
+    const texto = commentText.value.trim();
 
     // Validaciones de los campos
     if (nombre.length < 3 || nombre.length > 80) {
@@ -22,7 +20,7 @@ document.getElementById('form_comentarios').addEventListener('submit', function(
         return;
     }
 
-    if (text.length < 5) {
+    if (texto.length < 5) {
         message.textContent = "El comentario debe tener al menos 5 caracteres.";
         message.style.color = "red";
         return;
@@ -31,7 +29,7 @@ document.getElementById('form_comentarios').addEventListener('submit', function(
     // Si las validaciones pasan, agregamos el comentario
     const comment = {
         nombre: nombre,
-        texto: text,
+        texto: texto,
     };
 
     addCommentToList(comment);
@@ -41,7 +39,11 @@ document.getElementById('form_comentarios').addEventListener('submit', function(
     // Limpiar formulario
     nombreInput.value = '';
     commentText.value = '';
+
+    Submit();
 });
+};
+
 
 // Función para agregar el comentario al listado
 function addCommentToList(comment) {
@@ -52,10 +54,13 @@ function addCommentToList(comment) {
     commentList.appendChild(commentItem);
 }
 
+Submit = () => {
+    let form = document.getElementById("form_comentarios");
+    form.submit();
+  };
 
-let submitButton = document.getElementById("submit");
-submitButton.addEventListener("click", function() {
-    window.location.assign("informacion_dispositivo");
-});
 
-photo.addEventListener('click', toggleImageSize);
+let commentButton = document.getElementById("comentar");
+commentButton.addEventListener("click", validateComment);
+
+photo.addEventListener('click', toggleImageSize)
